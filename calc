@@ -1,0 +1,48 @@
+#!/bin/bash
+echo -n "Write a number to check : "
+read -r startnmb
+if [[ -z "$startnmb" ]]
+then
+echo "empty imput"
+exit 0
+fi
+
+control="$startnmb"
+seq="$startnmb"
+par () {
+startnmb=$((startnmb / 2))
+seq="$seq $startnmb"
+check
+}
+
+impar () {
+startnmb=$((startnmb *3 + 1))
+seq="$seq $startnmb"
+check
+}
+
+check () {
+var=$(echo "$startnmb" | tail -c 2)
+if [[ "$startnmb" == "1" ]]
+then
+echo "The number you wrote ends in 1"
+echo "------The sequence-------"
+echo ""
+echo "$seq"
+echo ""
+exit 0
+fi
+
+case $var in
+1|3|5|7|9)
+impar
+;;
+0|2|4|6|8)
+par
+;;
+*)
+exit 0
+;;
+esac
+}
+check
